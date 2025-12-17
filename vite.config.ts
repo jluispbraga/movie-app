@@ -28,24 +28,17 @@ export default defineConfig({
   server: {
     host: true,
     allowedHosts: [
-      ".manuspre.computer",
-      ".manus.computer",
-      ".manus-asia.computer",
-      ".manuscomputer.ai",
-      ".manusvm.computer",
       "localhost",
       "127.0.0.1",
+      "0.0.0.0"
     ],
     fs: {
       strict: true,
       deny: ["**/.*"],
     },
-    // Proxy /api requests to the backend server when running the standalone Vite dev server.
-    // This allows frontend requests to `/api/trpc` to reach the backend running on port 3001.
     proxy: {
       "/api": {
-        // Prefer IPv4 loopback to avoid IPv6 (::1) connection issues on some systems
-        target: `http://127.0.0.1:${process.env.DEV_BACKEND_PORT ?? 3001}`,
+        target: `http://localhost:${process.env.DEV_BACKEND_PORT || 3000}`,
         changeOrigin: true,
         secure: false,
       },

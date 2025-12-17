@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Film, Home, User, LogOut } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { getLoginUrl } from "@/const";
-const DEV_BACKEND_URL = import.meta.env.VITE_DEV_BACKEND_URL ?? "http://localhost:3002";
+const DEV_BACKEND_URL = import.meta.env.VITE_DEV_BACKEND_URL  ?? "https://pz73vn-3000";
 
 export function Navigation() {
   const { isAuthenticated, logout } = useAuth();

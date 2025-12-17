@@ -21,9 +21,10 @@ function isSecureRequest(req: Request) {
   return protoList.some(proto => proto.trim().toLowerCase() === "https");
 }
 
-export function getSessionCookieOptions(
-  req: Request
-): Pick<CookieOptions, "domain" | "httpOnly" | "path" | "sameSite" | "secure"> {
+export function getSessionCookieOptions(req: Request): Pick<
+  CookieOptions,
+  "domain" | "httpOnly" | "path" | "sameSite" | "secure"
+> {
   // When running in development over plain HTTP, setting `SameSite='none'` without
   // the `Secure` flag will cause modern browsers to reject the cookie. To make
   // local dev reliable we use `sameSite: 'lax'` when the request is not secure,
@@ -31,10 +32,20 @@ export function getSessionCookieOptions(
   const secure = isSecureRequest(req);
   const sameSite = secure ? ("none" as const) : ("lax" as const);
 
+  if (process.env.NODE_ENV === "development" && !isSecureRequest(req )) {
+    return {
+      httpOnly: true,
+      path: "/",
+      sameSite: "lax",
+      secure: false,
+    };
+  }
+
   return {
     httpOnly: true,
     path: "/",
-    sameSite,
-    secure,
+    sameSite: "none",
+    secure: true,
+    domain: process.env.NODE_ENV === "production" || process.env.CODESANDBOX_HOST ? ".csb.app" : undefined,
   };
 }
