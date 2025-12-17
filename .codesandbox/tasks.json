@@ -2,8 +2,8 @@
   // These tasks will run in order when initializing your CodeSandbox project.
   "setupTasks": [
     {
-      "command": "pnpm install",
-      "name": "Instalando dependências"
+      "name": "Instalando dependências",
+      "command": "pnpm install"
     }
   ],
 
@@ -23,7 +23,7 @@
     },
     "start": {
       "name": "start",
-      "command": "pnpm start",
+      "command": "pnpm app:backend",
       "runAtStart": true
     }
   }
